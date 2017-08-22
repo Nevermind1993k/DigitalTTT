@@ -14,8 +14,8 @@ class TicTacToeFrame extends JFrame {
     JButton[][] buttons = new JButton[FIELD][FIELD];
     GameListener listener = new GameListener();
     JTextField statusBar;
+    Menu menu;
     GamePanel gamePanel;
-    JMenuBar menu;
     ChatPanel chat;
     Integer turn, count;
 
@@ -29,8 +29,13 @@ class TicTacToeFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        menu = new Menu();
+        add(menu, BorderLayout.NORTH);
+
         gamePanel = new GamePanel();
         add(gamePanel, BorderLayout.CENTER);
+
+
 //        chat = new ChatPanel();
 //        add(chat, BorderLayout.EAST);
 
@@ -41,6 +46,93 @@ class TicTacToeFrame extends JFrame {
 
         setVisible(true);
 
+    }
+
+    class Menu extends JMenuBar {
+        Menu() {
+            //створюємо рядок меню
+            JMenuBar menuBar = new JMenuBar();
+            //додаємо рядок меню у фрейм
+            setJMenuBar(menuBar);
+
+            //Меню "Файл"
+            JMenu fileMenu = new JMenu("File");
+            menuBar.add(fileMenu);
+
+            //додаємо пункти в меню файл
+            JMenuItem newGame = new JMenuItem("New game",
+                    new ImageIcon(this.getClass().getResource("Icons/GamepadIcon.png")));
+
+            //додаємо обробник подій використавши безіменний внутрішній клас
+            newGame.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    restart();
+                }
+            });
+            fileMenu.add(newGame);
+            //додаємо розділювач
+            fileMenu.addSeparator();
+
+
+            JMenuItem saveItem = new JMenuItem("Save",
+                    new ImageIcon(this.getClass().getResource("Icons/SaveIcon.png")));
+            fileMenu.add(saveItem);
+
+            JMenuItem closeItem = new JMenuItem("Close",
+                    new ImageIcon(this.getClass().getResource("Icons/CloseIcon.png")));
+
+            //додаємо обробник подій використавши безіменний внутрішній клас
+            closeItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.exit(0);
+                }
+            });
+            fileMenu.add(closeItem);
+
+
+            JMenu optMenu = new JMenu("Options");
+            menuBar.add(optMenu);
+
+            JMenuItem settingsItem = new JMenuItem("Settings",
+                    new ImageIcon(this.getClass().getResource("Icons/GearsIcon.png")));
+            optMenu.add(settingsItem);
+
+
+            JMenu helpMenu = new JMenu("Help");
+            menuBar.add(helpMenu);
+
+            JMenuItem rulesItem = new JMenuItem("Rules",
+                    new ImageIcon(this.getClass().getResource("Icons/RulesIcon.png")));
+            rulesItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    printRules();
+                }
+            });
+            helpMenu.add(rulesItem);
+
+            JMenuItem historyItem = new JMenuItem("History",
+                    new ImageIcon(this.getClass().getResource("Icons/BookIcon.png")));
+            historyItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    printHistory();
+                }
+            });
+            helpMenu.add(historyItem);
+
+            JMenuItem aboutItem = new JMenuItem("About",
+                    new ImageIcon(this.getClass().getResource("Icons/HelpIcon.png")));
+            aboutItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    printInstructions();
+                }
+            });
+            helpMenu.add(aboutItem);
+        }
     }
 
 
@@ -66,13 +158,6 @@ class TicTacToeFrame extends JFrame {
     }
 
 
-    class Menu extends JMenuBar {
-        Menu() {
-
-        }
-    }
-
-
     class ChatPanel extends JPanel {
         ChatPanel() {
             setLayout(new BorderLayout());
@@ -93,7 +178,6 @@ class TicTacToeFrame extends JFrame {
 
                 ImageIcon ico = new ImageIcon(this.getClass().getResource("Icons/" + turn.toString() + ".png"));
                 butt.setIcon(ico);
-//                butt.setContentAreaFilled(true);
                 butt.setEnabled(false);
                 butt.setDisabledIcon(ico);
 
@@ -220,6 +304,19 @@ class TicTacToeFrame extends JFrame {
         }
     }
 
+
+
+    private void printRules() {
+        JOptionPane.showMessageDialog(null, "Some shit about rules");
+    }
+
+    private void printHistory() {
+        JOptionPane.showMessageDialog(null, "Some shit about History of the game");
+    }
+
+    private void printInstructions() {
+        JOptionPane.showMessageDialog(null, "Some shit about program");
+    }
 
 }
 
