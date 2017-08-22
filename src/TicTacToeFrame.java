@@ -8,18 +8,16 @@ import java.util.Scanner;
 class TicTacToeFrame extends JFrame {
 
     Scanner sc = new Scanner(System.in);
-    int field = 5;//sc.nextInt();
+    final int FIELD = 5;//sc.nextInt();
 
 
-    JButton[][] buttons = new JButton[field][field];
+    JButton[][] buttons = new JButton[FIELD][FIELD];
     GameListener listener = new GameListener();
     JTextField statusBar;
-    GamePanel panel;
+    GamePanel gamePanel;
+    JMenuBar menu;
     ChatPanel chat;
-    private Integer turn, count;
-
-    //ImageIcon xIcon = new ImageIcon(this.getClass().getResource("Icons/1.png"));
-    // ImageIcon oIcon = new ImageIcon(this.getClass().getResource("Icons/2.png"));
+    Integer turn, count;
 
 
     TicTacToeFrame() {
@@ -31,8 +29,8 @@ class TicTacToeFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        panel = new GamePanel();
-        add(panel, BorderLayout.CENTER);
+        gamePanel = new GamePanel();
+        add(gamePanel, BorderLayout.CENTER);
 //        chat = new ChatPanel();
 //        add(chat, BorderLayout.EAST);
 
@@ -45,24 +43,17 @@ class TicTacToeFrame extends JFrame {
 
     }
 
-    class ChatPanel extends JPanel {
-        ChatPanel() {
-            setLayout(new BorderLayout());
-            setSize(100, 600);
-        }
-    }
-
 
     class GamePanel extends JPanel {
         GamePanel() {
-            setLayout(new GridLayout(field, field));
+            setLayout(new GridLayout(FIELD, FIELD));
             setSize(600, 600);
             turn = 1;
             count = 0;
 
-            //add buttons on panel
-            for (int i = 0; i < field; i++) {
-                for (int j = 0; j < field; j++) {
+            //add buttons on gamePanel
+            for (int i = 0; i < FIELD; i++) {
+                for (int j = 0; j < FIELD; j++) {
                     buttons[i][j] = new JButton();
                     buttons[i][j].putClientProperty("INDEX", new Integer[]{i, j});
                     buttons[i][j].putClientProperty("OWNER", null);
@@ -71,9 +62,24 @@ class TicTacToeFrame extends JFrame {
                 }
             }
 
+        }
+    }
+
+
+    class Menu extends JMenuBar {
+        Menu() {
 
         }
     }
+
+
+    class ChatPanel extends JPanel {
+        ChatPanel() {
+            setLayout(new BorderLayout());
+            setSize(100, 600);
+        }
+    }
+
 
     class GameListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -87,11 +93,14 @@ class TicTacToeFrame extends JFrame {
 
                 ImageIcon ico = new ImageIcon(this.getClass().getResource("Icons/" + turn.toString() + ".png"));
                 butt.setIcon(ico);
+//                butt.setContentAreaFilled(true);
                 butt.setEnabled(false);
+                butt.setDisabledIcon(ico);
+
                 boolean result = checkVictoryCondition(index);
                 if (result) {
                     JOptionPane.showMessageDialog(null, "Player " + turn.toString() + " Wins");
-                    initComponents();
+                    restart();
                 } else {
                     if (turn == 1) {
                         turn = 2;
@@ -109,12 +118,13 @@ class TicTacToeFrame extends JFrame {
         }
     }
 
+
     private Integer getOwner(JButton b) {
         return (Integer) b.getClientProperty("OWNER");
     }
 
     //PrintButtonMap for Diagnostics
-    private void printbuttonMap(Integer[][] bMap) {
+    private void printButtonMap(Integer[][] bMap) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(bMap[i][j] + " ");
@@ -130,7 +140,7 @@ class TicTacToeFrame extends JFrame {
                 {getOwner(buttons[1][0]), getOwner(buttons[1][1]), getOwner(buttons[1][2])},
                 {getOwner(buttons[2][0]), getOwner(buttons[2][1]), getOwner(buttons[2][2])}
         };
-        printbuttonMap(buttonMap);
+        printButtonMap(buttonMap);
 
         Integer a = index[0];
         Integer b = index[1];
@@ -138,37 +148,37 @@ class TicTacToeFrame extends JFrame {
         int i;
 
         //check row
-        for (i = 0; i < field; i++) {
+        for (i = 0; i < FIELD; i++) {
             if (getOwner(buttons[a][i]) != getOwner(buttons[a][b])) {
                 break;
             }
         }
 
-        if (field <= 3) {
+        if (FIELD <= 3) {
             if (i == 3) {
                 return true;
             }
         }
 
-        if (field >= 5) {
+        if (FIELD >= 5) {
             if (i == 5) {
                 return true;
             }
         }
 
         //check column
-        for (i = 0; i < field; i++) {
+        for (i = 0; i < FIELD; i++) {
             if (getOwner(buttons[i][b]) != getOwner(buttons[a][b])) {
                 break;
             }
         }
-        if (field <= 3) {
+        if (FIELD <= 3) {
             if (i == 3) {
                 return true;
             }
         }
 
-        if (field >= 5) {
+        if (FIELD >= 5) {
             if (i == 5) {
                 return true;
             }
@@ -195,9 +205,10 @@ class TicTacToeFrame extends JFrame {
         return false;
     }
 
-    private void initComponents() {
-        for (int i = 0; i < field; i++) {
-            for (int j = 0; j < field; j++) {
+
+    private void restart() {
+        for (int i = 0; i < FIELD; i++) {
+            for (int j = 0; j < FIELD; j++) {
                 buttons[i][j].putClientProperty("INDEX", new Integer[]{i, j});
                 buttons[i][j].putClientProperty("OWNER", null);
                 buttons[i][j].setIcon(null);
