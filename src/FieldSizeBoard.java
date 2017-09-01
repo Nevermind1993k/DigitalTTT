@@ -7,7 +7,9 @@ public class FieldSizeBoard extends JFrame {
     private int height = 200;
     private JFrame frame = new JFrame();
     private JLabel label = new JLabel();
-    private JTextField fieldSize = new JTextField();
+    private JTextField fieldSizeTextField = new JTextField();
+    private JButton bPlay = new JButton();
+
 
     public FieldSizeBoard() {
         frame.setSize(width, height);
@@ -21,9 +23,20 @@ public class FieldSizeBoard extends JFrame {
         label.setText("Enter number of fields :");
         frame.add(label);
 
-        frame.add(fieldSize);
+        fieldSizeTextField.setText("0");
+        frame.add(fieldSizeTextField);
 
+        bPlay.setText("Play");
+        frame.add(bPlay);
 
+    }
+
+    public JTextField getFieldSizeTextField() {
+        return fieldSizeTextField;
+    }
+
+    public void setFieldSizeTextField(JTextField fieldSizeTextField) {
+        this.fieldSizeTextField = fieldSizeTextField;
     }
 
 }
