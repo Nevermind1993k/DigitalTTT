@@ -4,9 +4,11 @@ public class Main {
 
 
         //System.out.println("Введите размерность поля: ");
-        //duoTTT tttFrame = new duoTTT();
 
 
-        new MainMenu();
+
+//        new DuoTTT();
+//        new MainMenu();
+        new FieldSizeBoard();
     }
 }

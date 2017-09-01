@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
-class duoTTT extends JFrame implements Runnable {
+class DuoTTT extends JFrame implements TicTacToe {
 
 
     private final int FIELD = 5;//sc.nextInt();
@@ -23,10 +23,10 @@ class duoTTT extends JFrame implements Runnable {
     private Integer turn, count;
 
 
-    duoTTT() {
+    DuoTTT() {
         //JOptionPane.showMessageDialog(null, "Enter number of fields: ");
 
-        setTitle("Tic Tac Toe");
+        setTitle("Tic Tac Toe vs Friend");
         setLayout(new BorderLayout());
         setSize(600, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -40,7 +40,7 @@ class duoTTT extends JFrame implements Runnable {
 
 
 //        chat = new ChatPanel();
-//        add(chat, BorderLayout.EAST);
+//        add(chat, BorderLayout.WEST);
 
 
         statusBar = new JTextField("Player 1 turn");
@@ -54,20 +54,15 @@ class duoTTT extends JFrame implements Runnable {
 
     class Menu extends JMenuBar {
         Menu() {
-            //створюємо рядок меню
             JMenuBar menuBar = new JMenuBar();
-            //додаємо рядок меню у фрейм
             setJMenuBar(menuBar);
 
-            //Меню "Файл"
             JMenu fileMenu = new JMenu("File");
             menuBar.add(fileMenu);
 
-            //додаємо пункти в меню файл
             JMenuItem newGame = new JMenuItem("New game",
                     new ImageIcon("res/GamepadIcon.png"));
 
-            //додаємо обробник подій використавши безіменний внутрішній клас
             newGame.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -75,7 +70,6 @@ class duoTTT extends JFrame implements Runnable {
                 }
             });
             fileMenu.add(newGame);
-            //додаємо розділювач
             fileMenu.addSeparator();
 
 
@@ -86,7 +80,6 @@ class duoTTT extends JFrame implements Runnable {
             JMenuItem closeItem = new JMenuItem("Close",
                     new ImageIcon("res/CloseIcon.png"));
 
-            //додаємо обробник подій використавши безіменний внутрішній клас
             closeItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -212,7 +205,7 @@ class duoTTT extends JFrame implements Runnable {
     }
 
     //PrintButtonMap for Diagnostics
-    private void printButtonMap(Integer[][] bMap) {
+    public void printButtonMap(Integer[][] bMap) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(bMap[i][j] + " ");
@@ -221,8 +214,7 @@ class duoTTT extends JFrame implements Runnable {
         }
     }
 
-
-    private boolean checkVictoryCondition(Integer[] index) {
+    public boolean checkVictoryCondition(Integer[] index) {
         Integer[][] buttonMap = new Integer[][]{
                 {getOwner(buttons[0][0]), getOwner(buttons[0][1]), getOwner(buttons[0][2])},
                 {getOwner(buttons[1][0]), getOwner(buttons[1][1]), getOwner(buttons[1][2])},
@@ -293,13 +285,11 @@ class duoTTT extends JFrame implements Runnable {
         return false;
     }
 
-
-    @Override
-    public void run() {
-
+    private boolean checkForDraw() {
+        return false;
     }
 
-    private void restart() {
+    public void restart() {
         for (int i = 0; i < FIELD; i++) {
             for (int j = 0; j < FIELD; j++) {
                 buttons[i][j].putClientProperty("INDEX", new Integer[]{i, j});

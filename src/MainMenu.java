@@ -71,23 +71,21 @@ public class MainMenu extends JFrame {
         solo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                frame.dispose();
+                //TO DO
 
             }
         });
         duo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                duoTTT frame = new duoTTT();
-                //frame.dispose();
+                DuoTTT frameTTT = new DuoTTT();
+                frame.dispose();
             }
         });
         online.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                frame.dispose();
+                //TO DO
 
             }
         });
