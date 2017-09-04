@@ -7,8 +7,8 @@ public class Main {
 
 
 
+        new MainMenu();
 //        new DuoTTT();
-//        new MainMenu();
-        new FieldSizeBoard();
+//        new FieldSizeBoard();
     }
 }
